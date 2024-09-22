@@ -1,10 +1,11 @@
 import './App.css'
+import RouteController from "./routes/RouteController.tsx";
 
 function App() {
 
   return (
     <>
-     <div>Hello world</div>
+     <RouteController/>
     </>
   )
 }
