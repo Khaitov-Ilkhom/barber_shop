@@ -1,7 +1,7 @@
 import {fetchBaseQuery, retry, createApi} from "@reduxjs/toolkit/query/react";
 import {logOut} from "../slice/authSlice.ts";
 
-const baseQuery = async (args: never, api: never, extraOptions: never) => {
+const baseQuery = async (args: any, api: any, extraOptions: any) => {
   const {dispatch} = api;
   const rawBaseQuery = fetchBaseQuery({
     baseUrl: import.meta.env.VITE_BASE_API_URL,
@@ -29,7 +29,7 @@ const baseQuery = async (args: never, api: never, extraOptions: never) => {
 const fetchBaseQueryWithRetry = retry(baseQuery, {maxRetries: 0});
 
 export const api = createApi({
-  reducerPath: "api" | undefined,
+  reducerPath: "api",
   baseQuery: fetchBaseQueryWithRetry,
   tagTypes: ["AUTH"],
   endpoints: () => ({})

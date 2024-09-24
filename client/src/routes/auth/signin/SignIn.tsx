@@ -26,7 +26,7 @@ const SignIn: FC = () => {
   useEffect(() => {
     if(isSuccess){
       message.success("Successfully logged")
-      dispatch(signIn({ token: data.token}))
+      dispatch(signIn(data.token))
       navigate("/")
     }
     if (isError) {

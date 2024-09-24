@@ -1,15 +1,15 @@
 import {useRoutes} from "react-router-dom";
-import {SuspenseElement as Suspense} from "../utils";
-import React, {lazy} from "react";
+import {SuspenseElement as Suspense} from "../utils/Index.tsx";
+import React, {LazyExoticComponent} from "react";
 
-const Home: React.LazyExoticComponent<JSX.Element> = lazy(() => import("../routes/home/Home.tsx"))
-const Profile: React.LazyExoticComponent<JSX.Element> = lazy(() => import("../routes/profile/Profile.tsx"))
-const OurTeam: React.LazyExoticComponent<JSX.Element> = lazy(() => import("../routes/our-team/OurTeam.tsx"))
-const Gallery: React.LazyExoticComponent<JSX.Element> = lazy(() => import("../routes/gallery/Gallery.tsx"))
+const Home: LazyExoticComponent<any> = React.lazy(() => import("../routes/home/Home.tsx"))
+const Profile: LazyExoticComponent<any> = React.lazy(() => import("../routes/profile/Profile.tsx"))
+const OurTeam: LazyExoticComponent<any> = React.lazy(() => import("../routes/our-team/OurTeam.tsx"))
+const Gallery: LazyExoticComponent<any> = React.lazy(() => import("../routes/gallery/Gallery.tsx"))
 
-const Auth: React.LazyExoticComponent<JSX.Element> = React.lazy(() => import("../routes/auth/Auth.tsx"))
-const Login: React.LazyExoticComponent<JSX.Element> = React.lazy(() => import("../routes/auth/signin/SignIn.tsx"))
-const Register: React.LazyExoticComponent<JSX.Element> = React.lazy(() => import("../routes/auth/signup/SignUp.tsx"))
+const Auth: LazyExoticComponent<any> = React.lazy(() => import("../routes/auth/Auth.tsx"))
+const Login: LazyExoticComponent<any> = React.lazy(() => import("../routes/auth/signin/SignIn.tsx"))
+const Register: LazyExoticComponent<any> = React.lazy(() => import("../routes/auth/signup/SignUp.tsx"))
 
 const RouteController = () => {
   return useRoutes([
