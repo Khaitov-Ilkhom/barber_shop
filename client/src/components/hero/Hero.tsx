@@ -5,7 +5,7 @@ import {Typewriter} from "react-simple-typewriter";
 
 const Hero = () => {
   return (
-      <div className="max-w-[1440px] w-full mx-auto flex justify-center px-8 py-10 items-start gap-4">
+      <div className="max-w-[1440px] w-full mx-auto flex justify-center px-8 py-10 items-start gap-4 my-4">
         <div className="max-w-[560px] px-4">
           <h2 className="text-[46px]">WELCOME TO</h2>
           <p className="text-[64px] font-semibold">Barbershop in Tashkent </p>
