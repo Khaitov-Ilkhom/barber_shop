@@ -1,7 +1,11 @@
+import Header from "../../components/header/Header.tsx";
 
 const Gallery = () => {
   return (
-      <div>Gallery</div>
+      <div>
+        <Header/>
+        Gallery
+      </div>
   )
 }
 export default Gallery

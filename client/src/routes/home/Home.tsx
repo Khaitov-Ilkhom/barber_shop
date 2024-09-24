@@ -1,7 +1,13 @@
+import Header from "../../components/header/Header.tsx";
+import Hero from "../../components/hero/Hero.tsx";
 
 const Home = () => {
   return (
-      <div>Home</div>
+      <div className="w-full mx-auto">
+        <Header/>
+        <Hero/>
+      </div>
+
   )
 }
 export default Home
