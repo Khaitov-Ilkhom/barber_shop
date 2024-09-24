@@ -103,7 +103,7 @@ router.post("/sign-in", async (req, res) => {
       expiresIn: "1m",
     });
 
-    res.json({
+    return  res.status(500).json({
       message: "User found",
       payload: {user, token},
     });
