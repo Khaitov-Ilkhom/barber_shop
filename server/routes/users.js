@@ -1,19 +1,13 @@
 const express = require("express");
-const User = require("../models/User");
+const verifyToken = require("../middleware/verify-token");
+const UserController = require("../controllers/user.controller.js");
 const router = express.Router();
 
-router.get("/", async (req, res) => {
-  try {
-    const allUsers = await User.find();
-    res.json({
-      message: "Got all users",
-      payload: allUsers
-    })
-  } catch (error) {
-    res.status(500).json({
-      message: error
-    })
-  }
-})
+router
+    .get("/", verifyToken(["manager", "owner"]), (req, res) => UserController.getAllUsers(req, res))
+    .get("/barbers", (req, res) => UserController.getBarbers(req, res))
+    .patch("/archive/:id", verifyToken(["manager", "owner"]), (req, res) => UserController.archiveUser(req, res))
+    .patch("/unarchive/:id", verifyToken(["manager", "owner"]), (req, res) => UserController.unarchiveUser(req, res))
+    .patch("/update-role/:id", verifyToken(["manager", "owner"]), (req, res) => UserController.changeUserRole(req, res))
 
 module.exports = router
