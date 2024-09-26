@@ -18,11 +18,15 @@ const User = mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ["user", "manager", "owner"],
+    enum: ["user", "manager" , "owner", "barber"],
     default: "user"
   },
   avatar: {
     type: String
+  },
+  archived: {
+    type: Boolean,
+    default: false
   },
   password: {
     type: String,
@@ -30,4 +34,4 @@ const User = mongoose.Schema({
   }
 })
 
-module.exports = mongoose.model("Users", User)
+module.exports = mongoose.model("User", User)

@@ -1,11 +1,13 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-require("./utils/index");
+require("./utils");
 require("dotenv").config();
 
 const auth = require("./routes/auth");
 const users = require("./routes/users");
+const booking = require("./routes/booking");
+const service = require("./routes/services");
 
 const app = express();
 
@@ -22,7 +24,9 @@ mongoose
 
 app.use("/api/auth", auth);
 app.use("/api/users", users);
+app.use("/api/booking", booking);
+app.use("/api/service", service);
 
 app.listen(PORT, () => {
-  console.log(PORT + " is being listened")
+  console.log(PORT + " is being listended")
 })

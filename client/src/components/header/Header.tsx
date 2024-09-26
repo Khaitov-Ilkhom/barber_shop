@@ -1,23 +1,43 @@
 import {Link, NavLink, useNavigate} from "react-router-dom";
 import {SlUser} from "react-icons/sl";
 import {IoLogInOutline, IoLogOutOutline} from "react-icons/io5";
+import {LuLayoutDashboard} from "react-icons/lu";
 import {logOut} from "../../redux/slice/authSlice.ts";
 import {Dropdown, Space} from "antd";
 import {FaRegUserCircle} from "react-icons/fa";
 import userLogo from "../../images/headerProfile.svg"
+import {useDispatch, useSelector} from "react-redux";
+import {AppDispatch, RootState} from "../../redux/store";
+import {useEffect, useState} from "react";
 
 const Header = () => {
   const navigate = useNavigate()
-  const token = localStorage.getItem("token")
+  const [role, setRole] = useState(null)
+  const dispatch = useDispatch<AppDispatch>()
+  const {token} = useSelector((state: RootState) => state.auth);
+
+  useEffect(() => {
+    if (token) {
+      const {role} = JSON.parse(atob(token?.split(".")[1]))
+      setRole(role)
+    }
+  }, [token]);
+  console.log(role)
 
   const items = [
     {
-      label:
+      label: role && role === "user" || role === "barber" ?
           <div onClick={() => navigate("/profile")}
+               className="bg-transparent text-[#596780]">
+            {
+              token ? <div className="flex items-center gap-2"><span>Profile</span> <SlUser/></div> :
+                  <div className="flex items-center"><span>User not registered</span></div>
+            }
+          </div> :
+          <div onClick={() => navigate("/dashboard")}
                className="bg-transparent flex items-center gap-2 text-[#596780]">
-            <span>Profile</span> <SlUser/>
+            <span>Dashboard</span> <LuLayoutDashboard/>
           </div>,
-// : <div className="bg-transparent flex items-center gap-2 text-[#596780]">User not registered</div>,
       key: "0"
     },
     {
@@ -29,7 +49,7 @@ const Header = () => {
       key: '1',
     },
     {
-      label: <div onClick={() => logOut()} className="bg-transparent flex items-center gap-2 text-[#596780]">
+      label: <div onClick={() => dispatch(logOut())} className="bg-transparent flex items-center gap-2 text-[#596780]">
         <span>Log Out</span>
         <IoLogOutOutline/>
       </div>,
@@ -59,9 +79,11 @@ const Header = () => {
                     <Space>
                       <div className="pb-2 flex justify-center items-center">
                         {
-                          token && token ? <img className="w-[45px] rounded-full" src={userLogo as string} alt="User logo"/> : <FaRegUserCircle
-                              className="w-[40px] h-[40px] text-[#596780] rounded-full"
-                          />
+                          token && token ?
+                              <img className="w-[45px] rounded-full" src={userLogo as string} alt="User logo"/> :
+                              <FaRegUserCircle
+                                  className="w-[40px] h-[40px] text-[#596780] rounded-full"
+                              />
                         }
                       </div>
                     </Space>

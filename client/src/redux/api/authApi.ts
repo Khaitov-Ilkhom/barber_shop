@@ -1,11 +1,11 @@
 import { api } from "./index";
 import {FieldTypeL} from "../../routes/auth/signin/SignIn.tsx";
-import {Login, Register} from "../../types";
+import {Login, UserData} from "../../types";
 import {FieldType} from "../../routes/auth/signup/SignUp.tsx";
 
 const authApi = api.injectEndpoints?.({
   endpoints: (build) => ({
-    signUp: build.mutation<Register, FieldType>({
+    signUp: build.mutation<UserData, FieldType>({
       query: (body) => ({
         url: "/auth/sign-up",
         method: "POST",
@@ -19,8 +19,14 @@ const authApi = api.injectEndpoints?.({
         method: "POST",
         body
       })
+    }),
+    getProfile: build.query<UserData, void>({
+      query: () => ({
+        url: "/auth/profile"
+      }),
+      providesTags: ["AUTH"]
     })
   })
 })
 
-export const {useSignInMutation, useSignUpMutation} = authApi;
+export const {useSignInMutation, useSignUpMutation, useGetProfileQuery} = authApi;

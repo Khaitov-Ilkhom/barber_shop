@@ -23,10 +23,11 @@ const SignIn: FC = () => {
     signInRequest(values)
   };
 
+  console.log(data)
   useEffect(() => {
     if(isSuccess){
       message.success("Successfully logged")
-      dispatch(signIn(data.token))
+      dispatch(signIn(data.payload.token))
       navigate("/")
     }
     if (isError) {
