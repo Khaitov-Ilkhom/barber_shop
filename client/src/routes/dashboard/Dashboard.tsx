@@ -4,7 +4,6 @@ import {Outlet, useNavigate} from "react-router-dom";
 
 const {Header, Content} = Layout;
 
-
 const Dashboard = () => {
   const navigate = useNavigate()
 

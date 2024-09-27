@@ -7,5 +7,6 @@ const router = express.Router();
 router
     .post("/", verifyToken(["user"]), (req, res) => BookingController.createOrder(req, res))
     .get("/", verifyToken(["barber", "manager", "owner"]), (req, res) => BookingController.getBookings(req, res))
+    .get("/available", (req, res) => BookingController.getAvailableBookings(req, res))
 
 module.exports = router;

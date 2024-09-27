@@ -66,11 +66,11 @@ const AllUsers = () => {
 
   const columns: TableColumnsType = [
     {
-      title: 'Name',
+      title: 'Firstname',
       dataIndex: 'first_name',
     },
     {
-      title: 'Chinese Score',
+      title: 'Lastname',
       dataIndex: 'last_name',
     },
     {

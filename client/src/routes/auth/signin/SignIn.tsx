@@ -23,7 +23,6 @@ const SignIn: FC = () => {
     signInRequest(values)
   };
 
-  console.log(data)
   useEffect(() => {
     if(isSuccess){
       message.success("Successfully logged")
@@ -59,7 +58,7 @@ const SignIn: FC = () => {
               name="phone"
               rules={[{ required: true, message: "Please input your phone number!" }]}
           >
-            <Input placeholder="+998 (00) 123 45 67"/>
+            <Input defaultValue="+998"/>
           </Form.Item>
 
           <Form.Item<FieldTypeL>

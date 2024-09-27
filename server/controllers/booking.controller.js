@@ -63,6 +63,22 @@ class BookingController{
       })
     }
   }
+
+  async getAvailableBookings(req, res){
+    try{
+      const {date} = req.query;
+      const bookings = await Booking.find({date}).populate("barber").select(['-client', '-service', '-comment', '-price', '-paid'])
+      return res.json({
+        message: "Got all available bookings",
+        payload: bookings
+      })
+    }
+    catch(error){
+      res.status(500).json({
+        message: error
+      })
+    }
+  }
 }
 
 module.exports = new BookingController();

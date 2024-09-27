@@ -22,7 +22,6 @@ const Header = () => {
       setRole(role)
     }
   }, [token]);
-  console.log(role)
 
   const items = [
     {

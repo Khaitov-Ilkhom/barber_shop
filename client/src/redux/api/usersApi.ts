@@ -2,7 +2,7 @@ import {api} from "./index.ts";
 import {ChangeRoleReq, ChangeRoleRes, Id, Message, AllUser} from "../../types";
 
 
-const profileApi = api.injectEndpoints?.({
+const usersApi = api.injectEndpoints?.({
   endpoints: (build) => ({
     getAllUsers: build.query<AllUser, {"user-status" : string | null}>({
       query: (params) => ({
@@ -36,4 +36,4 @@ const profileApi = api.injectEndpoints?.({
   })
 })
 
-export const {useGetAllUsersQuery, useArchivedUserMutation, useUnArchivedUserMutation, useChangeRoleMutation} = profileApi
+export const {useGetAllUsersQuery, useArchivedUserMutation, useUnArchivedUserMutation, useChangeRoleMutation} = usersApi

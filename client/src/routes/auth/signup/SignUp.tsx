@@ -49,23 +49,26 @@ const SignUp: FC = () => {
             className="w-full"
         >
           <Title className="text-center">Sign up</Title>
-          <Form.Item<FieldType>
-              className="mb-2"
-              label="FirstName"
-              name="first_name"
-              rules={[{ required: true, message: "Please input your firstname!" }]}
-          >
-            <Input placeholder="Firstname"/>
-          </Form.Item>
 
-          <Form.Item<FieldType>
-              className="mb-2"
-              label="LastName"
-              name="last_name"
-              rules={[{ required: true, message: "Please input your lastname!" }]}
-          >
-            <Input placeholder="Lastname"/>
-          </Form.Item>
+          <div className="w-full flex justify-between items-center gap-4">
+            <Form.Item<FieldType>
+                className="mb-2"
+                label="FirstName"
+                name="first_name"
+                rules={[{ required: true, message: "Please input your firstname!" }]}
+            >
+              <Input placeholder="Firstname"/>
+            </Form.Item>
+
+            <Form.Item<FieldType>
+                className="mb-2"
+                label="LastName"
+                name="last_name"
+                rules={[{ required: true, message: "Please input your lastname!" }]}
+            >
+              <Input placeholder="Lastname"/>
+            </Form.Item>
+          </div>
 
           <Form.Item<FieldType>
               className="mb-2"
@@ -73,7 +76,7 @@ const SignUp: FC = () => {
               name="phone"
               rules={[{ required: true, message: "Please input your phone number!" }]}
           >
-            <Input placeholder="+998 (00) 123 45 67"/>
+            <Input defaultValue="+998"/>
           </Form.Item>
 
           <Form.Item<FieldType>
