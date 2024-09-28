@@ -3,4 +3,9 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100%;
+  min-height: 900px;
+}
+
+li {
+  list-style-type: circle;
 }
