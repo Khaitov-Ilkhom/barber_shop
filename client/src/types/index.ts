@@ -112,14 +112,6 @@ export interface Barber {
   __v:        number;
 }
 
-export interface Service {
-  _id:   string;
-  name:  string;
-  image: string;
-  price: number;
-  __v:   number;
-}
-
 export interface AllBookingForUser {
   message: string;
   payload: Payload[];

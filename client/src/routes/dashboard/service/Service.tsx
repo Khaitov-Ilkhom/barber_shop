@@ -1,7 +1,13 @@
-import {useCreateNewServiceMutation, useGetAllServiceQuery} from "../../../redux/api/servicesApi.ts";
+import {
+  useCreateNewServiceMutation,
+  useDeleteServiceMutation, useEditServiceMutation,
+  useGetAllServiceQuery
+} from "../../../redux/api/servicesApi.ts";
 import {Button, Form, FormProps, Image, Input, InputNumber, message, Modal, Table, TableColumnsType} from "antd";
 import {useEffect, useState} from "react";
-import useSearchParamsHook from "../../../params-hook/paramsHook.ts";
+import {MdModeEdit, MdDelete} from "react-icons/md";
+import {useForm} from "antd/es/form/Form";
+import {type Service} from "../../../types";
 
 export type FieldType = {
   name: string;
@@ -10,20 +16,43 @@ export type FieldType = {
 };
 
 const Service = () => {
+  const [form] = useForm()
+  const [editService, setEditService] = useState<Service | any>(null)
+  const [open, setOpen] = useState<boolean>(false);
   const {data} = useGetAllServiceQuery()
   const [newService, {isSuccess, isError}] = useCreateNewServiceMutation()
-  const {getParam, setParam, removeParam} = useSearchParamsHook()
-  const [open, setOpen] = useState<boolean>(false);
+  const [editServices, {isSuccess: editSuccess, isError: editError}] = useEditServiceMutation()
+  const [deleteService, {
+    isSuccess: deleteSuccess,
+    isError: deleteError,
+    isLoading: deleteLoading
+  }] = useDeleteServiceMutation()
 
   const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
-    newService(values)
-    console.log(values)
+    if (editService !== null) {
+      editServices({id: editService._id, ...values})
+    } else {
+      newService(values)
+    }
+    setOpen(false)
   };
-
   const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
     console.log('Failed:', errorInfo);
   };
-
+  const handleCreateService = () => {
+    setOpen(true)
+  }
+  const handleUpdate = (service: Service) => {
+    setEditService(service)
+    setOpen(true)
+  }
+  const modalCancel = () => {
+    setOpen(false)
+    setEditService(null)
+  }
+  const deletedService = (service: Service) => {
+    deleteService({id: service._id})
+  }
   const columns: TableColumnsType = [
     {
       title: 'Service name',
@@ -36,43 +65,55 @@ const Service = () => {
     },
     {
       title: 'Image',
-      render: (service) => <Image className="!w-[60px] rounded-xl shadow" src={service.image} alt="Service image"/>
+      render: (service) => <Image className="!w-[50px] !h-[50px] object-cover rounded-xl shadow" src={service.image}
+                                  alt="Service image"/>
     },
     {
       title: 'Actions',
-      render: (service) => <Button onClick={() => handleUpdate(service)}>Edit service</Button>
+      render: (service) => <div>
+        <Button className="mx-1 text-[20px] !border-yellow-500 bg-yellow-400 !text-black hover:!bg-yellow-300"
+                onClick={() => handleUpdate(service)}><MdModeEdit/></Button>
+        <Button loading={deleteLoading}
+                className="mx-1 text-[20px] !border-red-600 bg-red-500 !text-black hover:!bg-red-400"
+                onClick={() => deletedService(service)}><MdDelete/></Button>
+      </div>
     },
   ];
-
-  const handleCreateService = () => {
-    setParam("service", "create")
-    setOpen(true)
-  }
-
-  const handleUpdate = (service: FieldType) => {
-    setParam("service", "update")
-    console.log(service)
-    setOpen(true)
-  }
-
-  const modalCancel = () => {
-    setOpen(false)
-    removeParam("service")
-  }
-
-  useEffect(() => {
-    if (getParam("service")) return setOpen(true)
-    return removeParam("service")
-  }, []);
 
   useEffect(() => {
     if (isSuccess) {
       message.success("Successfully created service")
+      form.resetFields()
+      setEditService(null)
     }
     if (isError) {
       message.error("Error created service")
+      form.resetFields()
     }
-  }, [isSuccess, isError]);
+    if (deleteSuccess) {
+      message.success("Successfully delete service")
+    }
+    if (deleteError) {
+      message.error("Error deleting service")
+    }
+    if (editSuccess) {
+      message.success("Successfully updating service")
+      form.resetFields()
+      setEditService(null)
+    }
+    if (editError) {
+      message.error("Error updating service")
+      form.resetFields()
+    }
+  }, [isSuccess, isError, form, deleteSuccess, deleteError, editSuccess, editError]);
+  useEffect(() => {
+    form.setFieldsValue({
+      ...editService
+    });
+    if (editService === null) {
+      form.resetFields();
+    }
+  }, [editService]);
 
   return (
       <div>
@@ -82,17 +123,18 @@ const Service = () => {
         <Table columns={columns} dataSource={data?.payload?.map(service => ({key: service._id, ...service}))}/>
         <Modal
             className="max-w-[450px]"
-            title={"Create service"}
+            title={editService !== null ? "Edit service" : "Create service"}
             footer={null}
             maskClosable={false}
             open={open}
             onCancel={modalCancel}
         >
           <Form
+              form={form}
               name="basic"
               layout={"vertical"}
               className="w-full p-4"
-              initialValues={{remember: true}}
+              initialValues={editService || null}
               onFinish={onFinish}
               onFinishFailed={onFinishFailed}
               autoComplete="off"
@@ -119,12 +161,8 @@ const Service = () => {
                 label="Service image"
                 name="image"
                 rules={[
-                  {
-                    required: true, message: 'Please input service image !'
-                  },
-                  {
-                    type: "url", message: "This field must be a valid url."
-                  }
+                  {required: true, message: 'Please input service image !'},
+                  {type: "url", message: "This field must be a valid url."}
                 ]}
             >
               <Input placeholder="Service image url //https:"/>
@@ -132,7 +170,10 @@ const Service = () => {
 
             <Form.Item>
               <Button className="w-full" type="primary" htmlType="submit">
-                Create Service
+                {
+                  editService !== null ? "Edit Service" : "Create Service"
+                }
+
               </Button>
             </Form.Item>
           </Form>

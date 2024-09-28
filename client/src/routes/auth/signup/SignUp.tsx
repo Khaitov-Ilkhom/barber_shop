@@ -9,6 +9,7 @@ export type FieldType = {
   last_name:  string;
   phone:      string;
   password:   string;
+  avatar?: string;
 }
 
 const {Title, Text} = Typography
@@ -20,6 +21,9 @@ const SignUp: FC = () => {
   const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
     signInRequest(values)
   };
+  const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (errorInfo) => {
+    console.log("Failed:", errorInfo);
+  };
 
   useEffect(() => {
     if(isSuccess){
@@ -30,12 +34,6 @@ const SignUp: FC = () => {
       message.error("Registered Error")
     }
   }, [isSuccess, isError])
-
-  const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (
-      errorInfo
-  ) => {
-    console.log("Failed:", errorInfo);
-  };
 
   return (
       <div className="w-[400px] bg-white p-6 rounded-xl shadow-2xl">

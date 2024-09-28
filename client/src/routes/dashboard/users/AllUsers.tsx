@@ -1,11 +1,5 @@
 import useSearchParamsHook from "../../../params-hook/paramsHook.ts";
-import {
-  useArchivedUserMutation,
-  useChangeRoleMutation,
-  useGetAllUsersQuery,
-  useUnArchivedUserMutation
-} from "../../../redux/api/usersApi.ts";
-
+import {useArchivedUserMutation, useChangeRoleMutation, useGetAllUsersQuery, useUnArchivedUserMutation} from "../../../redux/api/usersApi.ts";
 import {Button, message, Select, Table, TableColumnsType} from 'antd';
 import {User} from "../../../types";
 import {useEffect} from "react";
@@ -14,16 +8,8 @@ const AllUsers = () => {
   const {getParam} = useSearchParamsHook();
   const {data} = useGetAllUsersQuery({"user-status": getParam("user-status")})
   const [changeRole, {isSuccess, isError}] = useChangeRoleMutation()
-  const [archiveUserID, {
-    isSuccess: archiveSuccess,
-    isLoading: archiveLoading,
-    isError: archiveError
-  }] = useArchivedUserMutation()
-  const [unArchiveUserID, {
-    isSuccess: unArchiveSuccess,
-    isLoading: unarchiveLoading,
-    isError: unArchiveError
-  }] = useUnArchivedUserMutation()
+  const [archiveUserID, {isSuccess: archiveSuccess, isLoading: archiveLoading, isError: archiveError}] = useArchivedUserMutation()
+  const [unArchiveUserID, {isSuccess: unArchiveSuccess, isLoading: unArchiveLoading, isError: unArchiveError}] = useUnArchivedUserMutation()
 
   const onChange = (value: string, user: User) => {
     changeRole({id: user._id, newRole: value})
@@ -32,7 +18,6 @@ const AllUsers = () => {
   const onSearch = (value: string) => {
     console.log('search:', value);
   };
-
   const archivedUser = (user: User) => {
     if (user.archived) {
       unArchiveUserID({id: user._id})
@@ -103,7 +88,7 @@ const AllUsers = () => {
       title: 'Archived',
       render: (user) => <div>{
         user.archived ?
-            <Button disabled={unarchiveLoading} loading={unarchiveLoading}
+            <Button disabled={unArchiveLoading} loading={unArchiveLoading}
                     onClick={() => archivedUser(user)}>UnArchive</Button> :
             <Button disabled={archiveLoading} loading={archiveLoading}
                     onClick={() => archivedUser(user)}>Archive</Button>

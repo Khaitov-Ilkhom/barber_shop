@@ -25,8 +25,16 @@ const authApi = api.injectEndpoints?.({
         url: "/auth/profile"
       }),
       providesTags: ["AUTH"]
+    }),
+    updateProfile: build.mutation<UserData, FieldType>({
+      query: (body) => ({
+        url: "/auth/profile",
+        method: "PATCH",
+        body
+      }),
+      invalidatesTags: ["AUTH"]
     })
   })
 })
 
-export const {useSignInMutation, useSignUpMutation, useGetProfileQuery} = authApi;
+export const {useSignInMutation, useSignUpMutation, useGetProfileQuery, useUpdateProfileMutation} = authApi;
