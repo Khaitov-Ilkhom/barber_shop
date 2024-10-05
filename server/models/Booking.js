@@ -27,7 +27,7 @@ const Booking = mongoose.Schema({
   ],
   client: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   barber: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-  comment: {
+  message: {
     type: String,
     default: "",
   },

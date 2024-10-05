@@ -6,6 +6,7 @@ const Home: LazyExoticComponent<any> = React.lazy(() => import("./home/Home.tsx"
 const UserProfile: LazyExoticComponent<any> = React.lazy(() => import("./profile/Profile.tsx"))
 const OurTeam: LazyExoticComponent<any> = React.lazy(() => import("./our-team/OurTeam.tsx"))
 const Gallery: LazyExoticComponent<any> = React.lazy(() => import("./gallery/Gallery.tsx"))
+const Bookings: LazyExoticComponent<any> = React.lazy(() => import("./bookings/Booking.tsx"))
 
 const Auth: LazyExoticComponent<any> = React.lazy(() => import("./auth/Auth.tsx"))
 const Login: LazyExoticComponent<any> = React.lazy(() => import("./auth/signin/SignIn.tsx"))
@@ -82,6 +83,10 @@ const RouteController = () => {
     {
       path: "gallery",
       element: <Suspense><Gallery/></Suspense>
+    },
+    {
+      path: "bookings",
+      element: <Suspense><Bookings/></Suspense>
     }
   ])
 }

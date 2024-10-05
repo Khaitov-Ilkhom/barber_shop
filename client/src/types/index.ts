@@ -31,6 +31,13 @@ export interface User {
   __v:        number;
 }
 
+export interface Profile {
+  phone:      string;
+  first_name: string;
+  last_name:  string;
+  avatar:     string;
+}
+
 export interface Message {
   message: string;
 }
@@ -60,17 +67,17 @@ export interface Service {
 
 export interface NewBooking {
   message: string;
-  payload: Booking;
+  payload: Bookings;
 }
 
-export interface Booking {
-  date:    Date;
+export interface Bookings {
+  date:    string;
   start:   string;
   end:     string;
   status:  string;
-  service: string[];
-  client:  string;
-  barber:  string;
+  service?: string | string[];
+  client?:  string | User;
+  barber?:  string | Barber;
   comment: string;
   price:   number;
   paid:    boolean;
@@ -86,18 +93,29 @@ export interface AllBooking {
 
 export interface Bookings {
   _id:     string;
-  date:    Date;
+  date:    string;
   start:   string;
   end:     string;
   status:  string;
-  service: Service[];
-  client:  User;
-  barber:  Barber;
+  service?: string | string[];
+  client?:  string | User;
+  barber?:  string | Barber;
   comment: string;
   price:   number;
   paid:    boolean;
   rating:  number[];
   __v:     number;
+}
+
+
+export interface Booking {
+  date?:    string;
+  start:   string;
+  end:     string;
+  service: Service[];
+  client?:  string | User;
+  barber:  string | Barber;
+  price:   number;
 }
 
 export interface Barber {
@@ -110,6 +128,7 @@ export interface Barber {
   archived:   boolean;
   password:   string;
   __v:        number;
+  comments:   any[];
 }
 
 export interface AllBookingForUser {
@@ -119,11 +138,27 @@ export interface AllBookingForUser {
 
 export interface Payload {
   _id:    string;
-  date:   Date;
+  date:   string;
   start:  string;
   end:    string;
   status: string;
   barber: Barber;
-  rating: number[];
+  rating?: number[];
   __v:    number;
+}
+
+export interface ServicePrice {
+  message: string;
+  payload: ServicesPrice;
+}
+
+export interface ServicesPrice {
+  services: Service[];
+  total:    number;
+}
+
+export interface Service {
+  _id:   string;
+  price: number;
+  __v:   number;
 }

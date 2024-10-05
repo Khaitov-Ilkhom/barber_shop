@@ -111,7 +111,7 @@ class UserController {
 
   async getBarbers(req, res){
     try{
-      const allBarbers = await User.find({role: "barber"});
+      const allBarbers = await User.find({role: "barber", archived: false}).populate("comments");
       res.json({
         message: "Got all barbers",
         payload: allBarbers

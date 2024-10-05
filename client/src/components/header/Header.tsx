@@ -12,8 +12,8 @@ import {useEffect, useState} from "react";
 
 const Header = () => {
   const navigate = useNavigate()
-  const [role, setRole] = useState(null)
   const dispatch = useDispatch<AppDispatch>()
+  const [role, setRole] = useState(null)
   const {token} = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
@@ -23,14 +23,18 @@ const Header = () => {
     }
   }, [token]);
 
+  const signOut = () => {
+    dispatch(logOut())
+    navigate("/")
+  }
+
   const items = [
     {
       label: role && role === "user" || role === "barber" ?
           <div onClick={() => navigate("/profile")}
                className="bg-transparent text-[#596780]">
             {
-              token ? <div className="flex items-center gap-2"><span>Profile</span> <SlUser/></div> :
-                  <div className="flex items-center"><span>User not registered</span></div>
+              <div className="flex items-center gap-2"><span>Profile</span> <SlUser/></div>
             }
           </div> :
           <div onClick={() => navigate("/dashboard")}
@@ -48,7 +52,7 @@ const Header = () => {
       key: '1',
     },
     {
-      label: <div onClick={() => dispatch(logOut())} className="bg-transparent flex items-center gap-2 text-[#596780]">
+      label: <div onClick={signOut} className="bg-transparent flex items-center gap-2 text-[#596780]">
         <span>Log Out</span>
         <IoLogOutOutline/>
       </div>,
@@ -57,7 +61,7 @@ const Header = () => {
   ];
 
   return (
-      <div className="mx-auto w-full shadow-2xl p-4">
+      <div className="mx-auto w-full shadow-xl p-4">
         <div className="max-w-[1440px] mx-auto w-full flex justify-between items-center gap-6 px-6">
           <div>
             <Link className='text-[32px] text-[#B5AF93]' to="/">Barber Shop</Link>
@@ -68,26 +72,29 @@ const Header = () => {
               <li className="text-[22px]"><NavLink to="/our-team">Our Team</NavLink></li>
               <li className="text-[22px]"><NavLink to="/gallery">Gallery</NavLink></li>
               <li>
-                <Dropdown
-                    menu={{
-                      items,
-                    }}
-                    trigger={['click']}
-                >
-                  <a onClick={(e) => e.preventDefault()}>
-                    <Space>
-                      <div className="pb-2 flex justify-center items-center">
-                        {
-                          token && token ?
-                              <img className="w-[45px] rounded-full" src={userLogo as string} alt="User logo"/> :
-                              <FaRegUserCircle
-                                  className="w-[40px] h-[40px] text-[#596780] rounded-full"
-                              />
-                        }
-                      </div>
-                    </Space>
-                  </a>
-                </Dropdown>
+                {
+                  token ? <Dropdown
+                          menu={{
+                            items,
+                          }}
+                          trigger={['click']}
+                      >
+                        <a onClick={(e) => e.preventDefault()}>
+                          <Space>
+                            <div className="pb-2 flex justify-center items-center">
+                              {
+                                token && token ?
+                                    <img className="w-[45px] rounded-full" src={userLogo as string} alt="User logo"/> :
+                                    <FaRegUserCircle
+                                        className="w-[40px] h-[40px] text-[#596780] rounded-full"
+                                    />
+                              }
+                            </div>
+                          </Space>
+                        </a>
+                      </Dropdown> :
+                      <button onClick={() => navigate("/auth")}>Sign in</button>
+                }
               </li>
             </ul>
           </div>

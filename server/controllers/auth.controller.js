@@ -91,6 +91,8 @@ class AuthController {
 
       if (!user) return res.status(404).json({ message: "User not found!" });
 
+      if(user.archived) return res.status(400).json({ message: "User is blocked!" });
+
       let result = bcrypt.compareSync(password, user.password);
 
       if (!result)

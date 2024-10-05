@@ -6,6 +6,6 @@
   min-height: 900px;
 }
 
-li {
+.uls > li {
   list-style-type: circle;
 }

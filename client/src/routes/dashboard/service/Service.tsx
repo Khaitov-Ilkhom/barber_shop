@@ -90,22 +90,24 @@ const Service = () => {
       message.error("Error created service")
       form.resetFields()
     }
+  }, [isSuccess, isError, form]);
+  useEffect(() => {
     if (deleteSuccess) {
       message.success("Successfully delete service")
     }
     if (deleteError) {
       message.error("Error deleting service")
     }
+  }, [deleteSuccess, deleteError]);
+  useEffect(() => {
     if (editSuccess) {
       message.success("Successfully updating service")
-      form.resetFields()
       setEditService(null)
     }
     if (editError) {
       message.error("Error updating service")
-      form.resetFields()
     }
-  }, [isSuccess, isError, form, deleteSuccess, deleteError, editSuccess, editError]);
+  }, [editSuccess, editError]);
   useEffect(() => {
     form.setFieldsValue({
       ...editService
@@ -113,7 +115,7 @@ const Service = () => {
     if (editService === null) {
       form.resetFields();
     }
-  }, [editService]);
+  }, [editService, form]);
 
   return (
       <div>
@@ -127,6 +129,7 @@ const Service = () => {
             footer={null}
             maskClosable={false}
             open={open}
+            forceRender={true}
             onCancel={modalCancel}
         >
           <Form
@@ -173,7 +176,6 @@ const Service = () => {
                 {
                   editService !== null ? "Edit Service" : "Create Service"
                 }
-
               </Button>
             </Form.Item>
           </Form>

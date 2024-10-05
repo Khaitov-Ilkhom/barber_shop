@@ -1,6 +1,6 @@
 import { api } from "./index";
 import {FieldTypeL} from "../../routes/auth/signin/SignIn.tsx";
-import {Login, UserData} from "../../types";
+import {Login, Profile, UserData} from "../../types";
 import {FieldType} from "../../routes/auth/signup/SignUp.tsx";
 
 const authApi = api.injectEndpoints?.({
@@ -26,7 +26,7 @@ const authApi = api.injectEndpoints?.({
       }),
       providesTags: ["AUTH"]
     }),
-    updateProfile: build.mutation<UserData, FieldType>({
+    updateProfile: build.mutation<UserData, Profile>({
       query: (body) => ({
         url: "/auth/profile",
         method: "PATCH",

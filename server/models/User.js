@@ -1,3 +1,4 @@
+const { number } = require("joi");
 const mongoose = require("mongoose");
 
 const User = mongoose.Schema({
@@ -18,7 +19,7 @@ const User = mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ["user", "manager", "owner", "barber"],
+    enum: ["user", "manager" , "owner", "barber"],
     default: "user"
   },
   avatar: {
@@ -31,6 +32,12 @@ const User = mongoose.Schema({
   password: {
     type: String,
     required: true
+  },
+  comments: {
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment", required: true}]
+  },
+  rating: {
+    type: Number
   }
 })
 

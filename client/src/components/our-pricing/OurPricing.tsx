@@ -4,7 +4,8 @@ const OurPricing = () => {
         <div>
           <h3 className="text-[55px] font-extrabold text-center mb-6">Our Pricing</h3>
         </div>
-        <div className=" max-w-[1200px] mx-auto w-full flex justify-around items-start gap-8 text-[32px] font-extralight">
+        <div
+            className=" max-w-[1200px] mx-auto w-full flex justify-around items-start gap-8 text-[32px] font-extralight">
           <div className='px-6'>
             <p className="flex justify-between items-center border-b py-2 border-gray-600 gap-[50px]">
               <span>Regular Haircut</span> <span className="text-[#B5AF93]">$34+</span>

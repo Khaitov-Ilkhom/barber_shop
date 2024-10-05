@@ -8,6 +8,7 @@ const auth = require("./routes/auth");
 const users = require("./routes/users");
 const booking = require("./routes/booking");
 const service = require("./routes/services");
+const comment = require("./routes/comment");
 
 const app = express();
 
@@ -26,7 +27,8 @@ app.use("/api/auth", auth);
 app.use("/api/users", users);
 app.use("/api/booking", booking);
 app.use("/api/service", service);
+app.use("/api/comment", comment);
 
 app.listen(PORT, () => {
-  console.log(PORT + " is being listended")
+  console.log(PORT + " is being listened")
 })

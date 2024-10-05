@@ -48,11 +48,15 @@ class ServiceController {
   }
 
   async getAllServices(req, res) {
+    const limit = req.query.limit;
+    const page = req.query.page || 1;
     try {
-      const allServices = await Service.find();
+      const servicesCount = await Service.countDocuments();
+      const allServices = await Service.find().limit(limit).skip(limit * (page - 1));
       return res.json({
         message: "Got all services",
         payload: allServices,
+        total: servicesCount
       });
     } catch (error) {
       res.status(500).json({

@@ -5,7 +5,7 @@ const WorkHours = () => {
           <div className="text-white max-w-[550px] px-8">
             <h3 className="text-[50px] font-extrabold">Why choose us?</h3>
             <p className="text-[22px] font-semibold">In addition, there 5 more reasons why men prefer Manhattan Barbershop N.Y.C:</p>
-            <ul className="p-4">
+            <ul className="p-4 uls">
               <li>Always welcoming environment</li>
               <li></li>
               <li>Our masters focus on the quality</li>

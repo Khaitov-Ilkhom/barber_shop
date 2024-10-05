@@ -1,6 +1,5 @@
 import {api} from "./index.ts";
-import {AllBooking, AllBookingForUser, NewBooking} from "../../types";
-
+import {AllBooking, AllBookingForUser, Booking, NewBooking, ServicePrice} from "../../types";
 
 const servicesApi = api.injectEndpoints?.({
   endpoints: (build) => ({
@@ -8,23 +7,39 @@ const servicesApi = api.injectEndpoints?.({
       query: () => ({
         url: "/booking",
       }),
-      providesTags: ["SERVICE"]
+      providesTags: ["BOOKING"]
     }),
-    getAllBookingForUser: build.query<AllBookingForUser, void>({
-      query: () => ({
-        url: "/booking/available",
+    getUserAllBooking: build.query<AllBooking, void>({
+      query: (params) => ({
+        url: `/booking/user-booking`,
+        params
       }),
-      providesTags: ["SERVICE"]
+      providesTags: ["BOOKING"]
     }),
-    createNewBooking: build.mutation<NewBooking, void>({
+    getAllBookingForUser: build.query<AllBookingForUser, string | {date: string}>({
+      query: (params) => ({
+        url: "/booking/available",
+        params
+      }),
+      providesTags: ["BOOKING"]
+    }),
+    createNewBooking: build.mutation<NewBooking, Booking>({
       query: (body) => ({
         url: `/booking`,
         method: "POST",
         body
       }),
-      invalidatesTags: ["SERVICE"]
+      invalidatesTags: ["BOOKING"]
+    }),
+    calculatingServicePrice: build.mutation<ServicePrice, string[]>({
+      query: (body) => ({
+        url: `/booking/calculate`,
+        method: "POST",
+        body: {service: body}
+      }),
+      invalidatesTags: ["BOOKING"]
     }),
   })
 })
 
-export const {useGetAllBookingQuery, useGetAllBookingForUserQuery, useCreateNewBookingMutation} = servicesApi
+export const {useGetAllBookingQuery, useGetAllBookingForUserQuery, useCreateNewBookingMutation, useCalculatingServicePriceMutation, useGetUserAllBookingQuery} = servicesApi
